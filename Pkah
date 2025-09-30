@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাল্টি গেমিং - সকল গেম একসাথে</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffcc00;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            color: #ffcc00;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-buttons {
+            display: flex;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            margin-left: 10px;
+        }
+
+        .btn-login {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        .btn-register {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn-hero {
+            background-color: #ff3333;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+        }
+
+        /* Games Categories */
+        .categories {
+            padding: 40px 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            margin: 0 10px 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .category-tab.active {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .category-tab:hover {
+            background-color: rgba(255, 204, 0, 0.7);
+        }
+
+        /* Games Grid */
+        .games {
+            padding: 60px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #ffcc00;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-image {
+            height: 160px;
+            background-color: #2c5364;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .game-info {
+            padding: 15px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .game-desc {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .btn-play {
+            background-color: #ffcc00;
+            color: #000;
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+
+        /* Featured Games */
+        .featured-games {
+            padding: 60px 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .featured-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #ffcc00 #203a43;
+        }
+
+        .featured-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .featured-slider::-webkit-scrollbar-track {
+            background: #203a43;
+            border-radius: 10px;
+        }
+
+        .featured-slider::-webkit-scrollbar-thumb {
+            background: #ffcc00;
+            border-radius: 10px;
+        }
+
+        .featured-game {
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .featured-game-image {
+            height: 180px;
+            background-color: #1a2a6c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .featured-game-info {
+            padding: 20px;
+        }
+
+        /* Jackpot Section */
+        .jackpot {
+            padding: 60px 0;
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+            text-align: center;
+        }
+
+        .jackpot-amount {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .jackpot-timer {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* Promotions Section */
+        .promotions {
+            padding: 60px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .promo-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .promo-card {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            color: #000;
+            transition: transform 0.3s;
+        }
+
+        .promo-card:nth-child(2) {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            color: #fff;
+        }
+
+        .promo-card:nth-child(3) {
+            background: linear-gradient(135deg, #799f0c, #ffe000);
+            color: #000;
+        }
+
+        .promo-card:hover {
+            transform: scale(1.05);
+        }
+
+        .promo-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .promo-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* How to Play Section */
+        .how-to-play {
+            padding: 60px 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 15px;
+            margin-bottom: 30px;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: #ffcc00;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #ffcc00;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #ffcc00;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin: 20px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px 10px;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>🎮</i> মাল্টি গেমিং
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">হোম</a></li>
+                        <li><a href="#">সব গেম</a></li>
+                        <li><a href="#">ক্রিকেট</a></li>
+                        <li><a href="#">জ্যাকপট</a></li>
+                        <li><a href="#">লাইভ ক্যাসিনো</a></li>
+                        <li><a href="#">প্রোমোশন</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-login">লগইন</button>
+                    <button class="btn btn-register">রেজিস্টার</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>বিশ্বের সেরা গেমিং প্ল্যাটফর্ম</h1>
+            <p>ক্রিকেট ব্যাটিং, ক্যাসিনো গেমস, স্লট মেশিন, জ্যাকপট গেমস - সবকিছু এক জায়গায়। নিরাপদ, দ্রুত এবং সহজ গেমিং অভিজ্ঞতা।</p>
+            <button class="btn btn-hero">এখনই খেলুন</button>
+        </div>
+    </section>
+
+    <!-- Games Categories -->
+    <section class="categories">
+        <div class="container">
+            <div class="category-tabs">
+                <div class="category-tab active">সব গেম</div>
+                <div class="category-tab">ক্রিকেট ব্যাটিং</div>
+                <div class="category-tab">জ্যাকপট গেমস</div>
+                <div class="category-tab">লাইভ ক্যাসিনো</div>
+                <div class="category-tab">স্লট গেমস</div>
+                <div class="category-tab">কার্ড গেমস</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Games Section -->
+    <section class="games">
+        <div class="container">
+            <h2 class="section-title">সব গেম</h2>
+            <div class="games-grid">
+                <!-- Game 1 -->
+                <div class="game-card">
+                    <div class="game-image">🏏</div>
+                    <div class="game-info">
+                        <div class="game-title">ক্রিকেট ব্যাটিং</div>
+                        <div class="game-desc">লাইভ ক্রিকেট ম্যাচে ব্যাট করুন এবং বড় পুরস্কার জিতুন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div class="game-card">
+                    <div class="game-image">✈️</div>
+                    <div class="game-info">
+                        <div class="game-title">অ্যাভেটর</div>
+                        <div class="game-desc">উড়ন্ত প্লেনের সাথে বেট করুন এবং মাল্টিপ্লায়ার গেম উপভোগ করুন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 3 -->
+                <div class="game-card">
+                    <div class="game-image">💰</div>
+                    <div class="game-info">
+                        <div class="game-title">মেগা জ্যাকপট</div>
+                        <div class="game-desc">বিশাল জ্যাকপট জিতুন এক ক্লিকেই</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 4 -->
+                <div class="game-card">
+                    <div class="game-image">🎰</div>
+                    <div class="game-info">
+                        <div class="game-title">স্লট মেশিন</div>
+                        <div class="game-desc">ক্লাসিক স্লট মেশিন গেমস এবং নতুন থিম</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 5 -->
+                <div class="game-card">
+                    <div class="game-image">♠️</div>
+                    <div class="game-info">
+                        <div class="game-title">পোকার</div>
+                        <div class="game-desc">রিয়েল মানি পোকার গেম - বুদ্ধিমত্তা দিয়ে জিতুন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 6 -->
+                <div class="game-card">
+                    <div class="game-image">🎯</div>
+                    <div class="game-info">
+                        <div class="game-title">টিজার গেম</div>
+                        <div class="game-desc">সহজ কিন্তু আসক্তিকর গেম - বড় পুরস্কার নিন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 7 -->
+                <div class="game-card">
+                    <div class="game-image">⚽</div>
+                    <div class="game-info">
+                        <div class="game-title">ফুটবল ব্যাটিং</div>
+                        <div class="game-desc">ফুটবল ম্যাচে ব্যাট করুন এবং জিতুন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Game 8 -->
+                <div class="game-card">
+                    <div class="game-image">🎲</div>
+                    <div class="game-info">
+                        <div class="game-title">লুডো কিং</div>
+                        <div class="game-desc">ক্লাসিক লুডো গেম - বন্ধুদের সাথে খেলুন</div>
+                        <a href="#" class="btn btn-play">খেলুন</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games -->
+    <section class="featured-games">
+        <div class="container">
+            <h2 class="section-title">ফিচার্ড গেমস</h2>
+            <div class="featured-slider">
+                <!-- Featured Game 1 -->
+                <div class="featured-game">
+                    <div class="featured-game-image">✈️</div>
+                    <div class="featured-game-info">
+                        <div class="game-title">অ্যাভেটর ৭৭</div>
+                        <div class="game-desc">সবচেয়ে জনপ্রিয় মাল্টিপ্লায়ার গেম। প্লেন যত উঁচুতে উড়বে, পুরস্কার তত বড়!</div>
+                        <a href="#" class="btn btn-play">এখনই খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Featured Game 2 -->
+                <div class="featured-game">
+                    <div class="featured-game-image">🏏</div>
+                    <div class="featured-game-info">
+                        <div class="game-title">লাইভ ক্রিকেট</div>
+                        <div class="game-desc">আইপিএল, বিশ্বকাপ এবং অন্যান্য টুর্নামেন্টে লাইভ ব্যাটিং করুন</div>
+                        <a href="#" class="btn btn-play">এখনই খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Featured Game 3 -->
+                <div class="featured-game">
+                    <div class="featured-game-image">💰</div>
+                    <div class="featured-game-info">
+                        <div class="game-title">মেগা মুলার</div>
+                        <div class="game-desc">১০০০x পর্যন্ত পুরস্কার জিতুন এই এক্সাইটিং গেমে</div>
+                        <a href="#" class="btn btn-play">এখনই খেলুন</a>
+                    </div>
+                </div>
+
+                <!-- Featured Game 4 -->
+                <div class="featured-game">
+                    <div class="featured-game-image">🎰</div>
+                    <div class="featured-game-info">
+                        <div class="game-title">গোল্ডেন স্লট</div>
+                        <div class="game-desc">সোনার স্লট মেশিন - বড় জয়ের সুযোগ</div>
+                        <a href="#" class="btn btn-play">এখনই খেলুন</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jackpot Section -->
+    <section class="jackpot">
+        <div class="container">
+            <h2>মেগা জ্যাকপট</h2>
+            <div class="jackpot-amount">₹ ৫,৭৬,৮৫,২১০</div>
+            <div class="jackpot-timer">পরবর্তী ড্র: <span id="jackpot-timer">০৫:৪৭:৩২</span></div>
+            <button class="btn btn-hero">জ্যাকপট জিতুন</button>
+        </div>
+    </section>
+
+    <!-- Promotions Section -->
+    <section class="promotions">
+        <div class="container">
+            <h2 class="section-title">বিশেষ অফার</h2>
+            <div class="promo-cards">
+                <div class="promo-card">
+                    <div class="promo-icon">🎁</div>
+                    <div class="promo-title">স্বাগত বোনাস</div>
+                    <p>প্রথম ডিপোজিটে ১০০% বোনাস পান ৫০০০ টাকা পর্যন্ত</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-icon">💰</div>
+                    <div class="promo-title">ক্যাশব্যাক অফার</div>
+                    <p>প্রতি সপ্তাহে ১০% ক্যাশব্যাক পান আপনার হারানো বেটে</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-icon">🏆</div>
+                    <div class="promo-title">বিশেষ টুর্নামেন্ট</div>
+                    <p>বিশেষ টুর্নামেন্টে অংশ নিন এবং ১০ লক্ষ টাকা জিতুন</p>
+                </div>
+                <div class="promo-card">
+                    <div class="promo-icon">🎯</div>
+                    <div class="promo-title">রেফারেল বোনাস</div>
+                    <p>বন্ধুকে রেফার করুন এবং ৫০০ টাকা বোনাস পান</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Play Section -->
+    <section class="how-to-play">
+        <div class="container">
+            <h2 class="section-title">কিভাবে খেলবেন</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">১</div>
+                    <h3>অ্যাকাউন্ট তৈরি করুন</h3>
+                    <p>সহজেই রেজিস্টার করুন এবং আপনার অ্যাকাউন্ট ভেরিফাই করুন</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">২</div>
+                    <h3>ডিপোজিট করুন</h3>
+                    <p>আপনার অ্যাকাউন্টে টাকা ডিপোজিট করুন নিরাপদ পদ্ধতিতে</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">৩</div>
+                    <h3>গেম খেলুন</h3>
+                    <p>আপনার পছন্দের গেম খেলুন এবং জিতুন</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">৪</div>
+                    <h3>টাকা উত্তোলন করুন</h3>
+                    <p>জিতেছেন? সাথে সাথে টাকা উত্তোলন করুন</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>মাল্টি গেমিং</h3>
+                    <p>বিশ্বের সবচেয়ে বিশ্বস্ত এবং জনপ্রিয় গেমিং প্ল্যাটফর্ম। নিরাপদ এবং দ্রুত লেনদেনের নিশ্চয়তা।</p>
+                </div>
+                <div class="footer-column">
+                    <h3>গেমস</h3>
+                    <ul>
+                        <li><a href="#">ক্রিকেট ব্যাটিং</a></li>
+                        <li><a href="#">অ্যাভেটর গেমস</a></li>
+                        <li><a href="#">জ্যাকপট গেমস</a></li>
+                        <li><a href="#">লাইভ ক্যাসিনো</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>লিংক</h3>
+                    <ul>
+                        <li><a href="#">হোম</a></li>
+                        <li><a href="#">প্রোমোশন</a></li>
+                        <li><a href="#">লিডারবোর্ড</a></li>
+                        <li><a href="#">ব্লগ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>সাপোর্ট</h3>
+                    <ul>
+                        <li><a href="#">সচরাচর জিজ্ঞাসা</a></li>
+                        <li><a href="#">যোগাযোগ</a></li>
+                        <li><a href="#">নিয়ম ও শর্তাবলী</a></li>
+                        <li><a href="#">গোপনীয়তা নীতি</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© ২০২৩ মাল্টি গেমিং - সমস্ত অধিকার সংরক্ষিত | ১৮+ বয়সের ব্যবহারকারীদের জন্য প্রযোজ্য</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category tabs functionality
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real site, this would filter games by category
+                });
+            });
+
+            // Play buttons functionality
+            const playButtons = document.querySelectorAll('.btn-play, .btn-bet');
+            playButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('গেম লোড হচ্ছে...');
+                    // In a real site, this would load the selected game
+                });
+            });
+
+            // Register button functionality
+            const registerButton = document.querySelector('.btn-register');
+            registerButton.addEventListener('click', function() {
+                alert('রেজিস্ট্রেশন পেজে রিডাইরেক্ট করা হচ্ছে...');
+            });
+
+            // Login button functionality
+            const loginButton = document.querySelector('.btn-login');
+            loginButton.addEventListener('click', function() {
+                alert('লগইন পেজে রিডাইরেক্ট করা হচ্ছে...');
+            });
+
+            // Hero button functionality
+            const heroButton = document.querySelector('.btn-hero');
+            heroButton.addEventListener('click', function() {
+                alert('রেজিস্ট্রেশন পেজে রিডাইরেক্ট করা হচ্ছে...');
+            });
+
+            // Jackpot timer
+            function updateJackpotTimer() {
+                const timerElement = document.getElementById('jackpot-timer');
+                let time = timerElement.textContent.split(':');
+                let hours = parseInt(time[0]);
+                let minutes = parseInt(time[1]);
+                let seconds = parseInt(time[2]);
+                
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                        if (hours < 0) {
+                            hours = 5;
+                            minutes = 59;
+                            seconds = 59;
+                        }
+                    }
+                }
+                
+                timerElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+            
+            setInterval(updateJackpotTimer, 1000);
+        });
+    </script>
+</body>
+</html>
