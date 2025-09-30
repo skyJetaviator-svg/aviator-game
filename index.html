@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviator Demo Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>✈️ Aviator Demo</h1>
+    <div class="sky">
+      <div id="plane">✈️</div>
+    </div>
+    <div class="multiplier">x<span id="multiplier">1.00</span></div>
+    
+    <div class="controls">
+      <p>Balance: $<span id="balance">1000</span></p>
+      <input type="number" id="bet-amount" placeholder="Enter Bet Amount" min="1">
+      <button id="start-btn">Start</button>
+      <button id="cashout-btn" disabled>Cash Out</button>
+    </div>
+    
+    <p id="result"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
